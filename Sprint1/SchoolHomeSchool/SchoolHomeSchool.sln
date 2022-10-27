@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolHomeSchool", "SchoolHomeSchool\SchoolHomeSchool\SchoolHomeSchool.csproj", "{FFE7B1B5-96DB-46AA-A0E8-18A7B48474A3}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "SchoolHomeSchoolContent", "SchoolHomeSchool\SchoolHomeSchoolContent\SchoolHomeSchoolContent.contentproj", "{6AC7C939-4F43-40A2-B451-F6B59F52FB6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFE7B1B5-96DB-46AA-A0E8-18A7B48474A3}.Debug|x86.ActiveCfg = Debug|x86
+		{FFE7B1B5-96DB-46AA-A0E8-18A7B48474A3}.Debug|x86.Build.0 = Debug|x86
+		{FFE7B1B5-96DB-46AA-A0E8-18A7B48474A3}.Release|x86.ActiveCfg = Release|x86
+		{FFE7B1B5-96DB-46AA-A0E8-18A7B48474A3}.Release|x86.Build.0 = Release|x86
+		{6AC7C939-4F43-40A2-B451-F6B59F52FB6A}.Debug|x86.ActiveCfg = Debug|x86
+		{6AC7C939-4F43-40A2-B451-F6B59F52FB6A}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {683FFE0E-535A-4141-A4B0-9B12970F1DBE}
+	EndGlobalSection
+EndGlobal

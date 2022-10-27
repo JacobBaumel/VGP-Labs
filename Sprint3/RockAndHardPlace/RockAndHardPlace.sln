@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockAndHardPlace", "RockAndHardPlace\RockAndHardPlace\RockAndHardPlace.csproj", "{31ACF9FE-9B88-453C-BBCE-2651C214E325}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "RockAndHardPlaceContent", "RockAndHardPlace\RockAndHardPlaceContent\RockAndHardPlaceContent.contentproj", "{02336830-8A28-4A4F-A5E9-4DBE525BE459}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31ACF9FE-9B88-453C-BBCE-2651C214E325}.Debug|x86.ActiveCfg = Debug|x86
+		{31ACF9FE-9B88-453C-BBCE-2651C214E325}.Debug|x86.Build.0 = Debug|x86
+		{31ACF9FE-9B88-453C-BBCE-2651C214E325}.Release|x86.ActiveCfg = Release|x86
+		{31ACF9FE-9B88-453C-BBCE-2651C214E325}.Release|x86.Build.0 = Release|x86
+		{02336830-8A28-4A4F-A5E9-4DBE525BE459}.Debug|x86.ActiveCfg = Debug|x86
+		{02336830-8A28-4A4F-A5E9-4DBE525BE459}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C5B4CD8-DF01-4C22-B907-B7B6A6C22386}
+	EndGlobalSection
+EndGlobal

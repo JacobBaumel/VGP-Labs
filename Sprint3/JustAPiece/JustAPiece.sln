@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.399
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustAPiece", "JustAPiece\JustAPiece\JustAPiece.csproj", "{C0968459-00CC-4A36-97EA-06209C37DDA6}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "JustAPieceContent", "JustAPiece\JustAPieceContent\JustAPieceContent.contentproj", "{31D1615F-6A50-42E7-A7DE-2581AB2509C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0968459-00CC-4A36-97EA-06209C37DDA6}.Debug|x86.ActiveCfg = Debug|x86
+		{C0968459-00CC-4A36-97EA-06209C37DDA6}.Debug|x86.Build.0 = Debug|x86
+		{C0968459-00CC-4A36-97EA-06209C37DDA6}.Release|x86.ActiveCfg = Release|x86
+		{C0968459-00CC-4A36-97EA-06209C37DDA6}.Release|x86.Build.0 = Release|x86
+		{31D1615F-6A50-42E7-A7DE-2581AB2509C0}.Debug|x86.ActiveCfg = Debug|x86
+		{31D1615F-6A50-42E7-A7DE-2581AB2509C0}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C111E4F5-A684-478B-ACE1-73FFA5736DFB}
+	EndGlobalSection
+EndGlobal

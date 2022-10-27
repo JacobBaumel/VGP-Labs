@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeJakeRun", "SeeJakeRun\SeeJakeRun\SeeJakeRun.csproj", "{B49CBED6-6C44-4CEC-A7FC-AC092559A70B}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "SeeJakeRunContent", "SeeJakeRun\SeeJakeRunContent\SeeJakeRunContent.contentproj", "{78173E71-CE2C-43EA-B603-1F9C3F434D4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B49CBED6-6C44-4CEC-A7FC-AC092559A70B}.Debug|x86.ActiveCfg = Debug|x86
+		{B49CBED6-6C44-4CEC-A7FC-AC092559A70B}.Debug|x86.Build.0 = Debug|x86
+		{B49CBED6-6C44-4CEC-A7FC-AC092559A70B}.Release|x86.ActiveCfg = Release|x86
+		{B49CBED6-6C44-4CEC-A7FC-AC092559A70B}.Release|x86.Build.0 = Release|x86
+		{78173E71-CE2C-43EA-B603-1F9C3F434D4D}.Debug|x86.ActiveCfg = Debug|x86
+		{78173E71-CE2C-43EA-B603-1F9C3F434D4D}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32EDDD3B-1738-4A62-962D-41AC61F0036B}
+	EndGlobalSection
+EndGlobal

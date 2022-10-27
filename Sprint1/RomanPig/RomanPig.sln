@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomanPig", "RomanPig\RomanPig\RomanPig.csproj", "{BCAAEED1-9365-4639-8BEA-30CAF5C074EC}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "RomanPigContent", "RomanPig\RomanPigContent\RomanPigContent.contentproj", "{DAF86C12-BA17-466E-9369-3A84A803C101}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCAAEED1-9365-4639-8BEA-30CAF5C074EC}.Debug|x86.ActiveCfg = Debug|x86
+		{BCAAEED1-9365-4639-8BEA-30CAF5C074EC}.Debug|x86.Build.0 = Debug|x86
+		{BCAAEED1-9365-4639-8BEA-30CAF5C074EC}.Release|x86.ActiveCfg = Release|x86
+		{BCAAEED1-9365-4639-8BEA-30CAF5C074EC}.Release|x86.Build.0 = Release|x86
+		{DAF86C12-BA17-466E-9369-3A84A803C101}.Debug|x86.ActiveCfg = Debug|x86
+		{DAF86C12-BA17-466E-9369-3A84A803C101}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A9BE3BA-2F6E-44F8-8CE2-2AAA4C966D57}
+	EndGlobalSection
+EndGlobal

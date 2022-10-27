@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backdrop", "Backdrop\Backdrop\Backdrop.csproj", "{A7D976DC-1F9F-4DE2-90C0-8F3446A1B96F}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "BackdropContent", "Backdrop\BackdropContent\BackdropContent.contentproj", "{EE28587A-A1DC-4491-A266-6CEAC53A0C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7D976DC-1F9F-4DE2-90C0-8F3446A1B96F}.Debug|x86.ActiveCfg = Debug|x86
+		{A7D976DC-1F9F-4DE2-90C0-8F3446A1B96F}.Debug|x86.Build.0 = Debug|x86
+		{A7D976DC-1F9F-4DE2-90C0-8F3446A1B96F}.Release|x86.ActiveCfg = Release|x86
+		{A7D976DC-1F9F-4DE2-90C0-8F3446A1B96F}.Release|x86.Build.0 = Release|x86
+		{EE28587A-A1DC-4491-A266-6CEAC53A0C14}.Debug|x86.ActiveCfg = Debug|x86
+		{EE28587A-A1DC-4491-A266-6CEAC53A0C14}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2048681-A595-4639-89BC-1C5F60F83A90}
+	EndGlobalSection
+EndGlobal

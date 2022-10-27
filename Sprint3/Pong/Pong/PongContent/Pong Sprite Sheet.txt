@@ -1,0 +1,7 @@
+green 1 = 0 0 800 480
+green 2 = 0 481 800 480
+paddle-blue = 801 714 32 128
+paddle-green = 1515 0 32 128
+paddle-grey = 834 714 32 128
+tennis ball = 801 0 713 713
+White Square = 867 714 16 16

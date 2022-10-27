@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld\HelloWorld.csproj", "{1915799B-F0AF-41CC-BAF6-3BD7DBA5C8C9}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "HelloWorldContent", "HelloWorld\HelloWorldContent\HelloWorldContent.contentproj", "{3935C8F8-A61D-402B-87A7-702E1CE84DD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1915799B-F0AF-41CC-BAF6-3BD7DBA5C8C9}.Debug|x86.ActiveCfg = Debug|x86
+		{1915799B-F0AF-41CC-BAF6-3BD7DBA5C8C9}.Debug|x86.Build.0 = Debug|x86
+		{1915799B-F0AF-41CC-BAF6-3BD7DBA5C8C9}.Release|x86.ActiveCfg = Release|x86
+		{1915799B-F0AF-41CC-BAF6-3BD7DBA5C8C9}.Release|x86.Build.0 = Release|x86
+		{3935C8F8-A61D-402B-87A7-702E1CE84DD7}.Debug|x86.ActiveCfg = Debug|x86
+		{3935C8F8-A61D-402B-87A7-702E1CE84DD7}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91B9D256-CDF7-41EF-8CFF-53B6EF27F635}
+	EndGlobalSection
+EndGlobal
