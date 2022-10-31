@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "War", "War\War\War.csproj", "{DDF88389-7CC6-4153-86B0-1EC38C213454}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "WarContent", "War\WarContent\WarContent.contentproj", "{DDF55630-5819-4378-A9BE-6CDF595375A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDF88389-7CC6-4153-86B0-1EC38C213454}.Debug|x86.ActiveCfg = Debug|x86
+		{DDF88389-7CC6-4153-86B0-1EC38C213454}.Debug|x86.Build.0 = Debug|x86
+		{DDF88389-7CC6-4153-86B0-1EC38C213454}.Release|x86.ActiveCfg = Release|x86
+		{DDF88389-7CC6-4153-86B0-1EC38C213454}.Release|x86.Build.0 = Release|x86
+		{DDF55630-5819-4378-A9BE-6CDF595375A1}.Debug|x86.ActiveCfg = Debug|x86
+		{DDF55630-5819-4378-A9BE-6CDF595375A1}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4E9DBB7-4262-4B25-B975-03FF2FDC2F5B}
+	EndGlobalSection
+EndGlobal

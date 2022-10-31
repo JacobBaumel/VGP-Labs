@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cards {
+namespace StarField {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -17,13 +17,12 @@ namespace Cards {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Card c1;
-        Card c2;
+        Star[] stars;
+        Texture2D star;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            
         }
 
         /// <summary>
@@ -34,6 +33,7 @@ namespace Cards {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
+            stars = new Star[250];
             base.Initialize();
         }
 
@@ -44,8 +44,10 @@ namespace Cards {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            c1 = new Card(Content.Load<Texture2D>("10ofSpades"), 10, Card.Suits.SPADE, 0, 0);
-            c2 = new Card(Content.Load<Texture2D>("AceofDiamonds"), 1, Card.Suits.DIAMOND, 200, 0);
+            star = Content.Load<Texture2D>("Star");
+            for(int i = 0; i < stars.Length; i++) {
+                stars[i] = new Star(star);
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -67,6 +69,8 @@ namespace Cards {
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            foreach(Star s in stars)
+                s.update();
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -77,12 +81,13 @@ namespace Cards {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            c1.draw(spriteBatch);
-            c2.draw(spriteBatch);
+            foreach(Star s in stars)
+                s.draw(spriteBatch);
             spriteBatch.End();
+
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

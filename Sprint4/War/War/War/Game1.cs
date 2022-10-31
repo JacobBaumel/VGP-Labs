@@ -7,9 +7,10 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
-namespace Cards {
+namespace War {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -17,13 +18,21 @@ namespace Cards {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Card c1;
-        Card c2;
+        Rectangle c1;
+        Rectangle c2;
+        int c1Index;
+        int c2Index;
+        Card[] cards;
+        SpriteFont font;
+        bool pushed;
+        Random r;
+
+        Vector2 c1Text;
+        Vector2 c2Text;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            
         }
 
         /// <summary>
@@ -34,6 +43,18 @@ namespace Cards {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
+            r = new Random((int) DateTime.Now.Ticks);
+            c1 = new Rectangle(100, 100, 142, 212);
+            c2 = new Rectangle(500, 100, 142, 212);
+            c1Index = r.Next(0, 51);
+            pushed = false;
+            c1Text = new Vector2(c1.X, c1.Y + c1.Height);
+            c2Text = new Vector2(c2.X, c2.Y + c2.Height);
+
+            do {
+                c2Index = r.Next(0, 51);
+            } while(c2Index == c1Index);
+
             base.Initialize();
         }
 
@@ -44,8 +65,15 @@ namespace Cards {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            c1 = new Card(Content.Load<Texture2D>("10ofSpades"), 10, Card.Suits.SPADE, 0, 0);
-            c2 = new Card(Content.Load<Texture2D>("AceofDiamonds"), 1, Card.Suits.DIAMOND, 200, 0);
+            font = Content.Load<SpriteFont>("SpriteFont1");
+            string[] files = Directory.GetFiles(@"Content\");
+            cards = new Card[files.Length];
+            for(int i = 0; i < files.Length; i++) {
+                string cname = files[i].Substring(0, files[i].LastIndexOf(".")).Substring(files[i].LastIndexOf(@"\") + 1);
+                if(cname.Length != 3)
+                    continue;
+                cards[i] = new Card(Content.Load<Texture2D>(cname), Card.cardFileNameToValue(cname), Card.getSuitFromLetter(cname), 0, 0);
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -67,6 +95,20 @@ namespace Cards {
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            if(Keyboard.GetState().IsKeyDown(Keys.S)) {
+                if(!pushed) {
+                    pushed = true;
+                    shuffle(cards);
+                    c1Index = r.Next(0, cards.Length - 1);
+
+                    do {
+                        c2Index = r.Next(0, cards.Length - 1);
+                    } while(c2Index == c1Index);
+                }
+            }
+
+            else
+                pushed = false;
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -79,13 +121,35 @@ namespace Cards {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
             spriteBatch.Begin();
-            c1.draw(spriteBatch);
-            c2.draw(spriteBatch);
+            spriteBatch.DrawString(font, "Push S to shuffle", Vector2.Zero, Color.White);
+            cards[c1Index].draw(spriteBatch, c1);
+            cards[c2Index].draw(spriteBatch, c2);
+            spriteBatch.DrawString(font, "Suit: " + cards[c1Index].suit + "\nValue: " + cards[c1Index].value, c1Text, Color.White);
+            spriteBatch.DrawString(font, "Suit: " + cards[c2Index].suit + "\nValue: " + cards[c2Index].value, c2Text, Color.White);
             spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
+
+
+        public T[] shuffle<T>(T[] list) {
+            T[] shuffled = new T[list.Length];
+
+            foreach(T t in list) {
+                while(true) {
+                    int pos = r.Next(0, list.Length);
+                    if(shuffled[pos] != null)
+                        continue;
+                    shuffled[pos] = t;
+                    break;
+                }
+            }
+
+            return shuffled;
+        }
+        
     }
 }
