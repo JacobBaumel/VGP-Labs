@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeathBlossom", "DeathBlossom\DeathBlossom\DeathBlossom.csproj", "{DD0C2E1B-6BEA-458A-8307-B53C38706087}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "DeathBlossomContent", "DeathBlossom\DeathBlossomContent\DeathBlossomContent.contentproj", "{FF4FFAA6-F065-4569-9EB0-CA60925CC62C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD0C2E1B-6BEA-458A-8307-B53C38706087}.Debug|x86.ActiveCfg = Debug|x86
+		{DD0C2E1B-6BEA-458A-8307-B53C38706087}.Debug|x86.Build.0 = Debug|x86
+		{DD0C2E1B-6BEA-458A-8307-B53C38706087}.Release|x86.ActiveCfg = Release|x86
+		{DD0C2E1B-6BEA-458A-8307-B53C38706087}.Release|x86.Build.0 = Release|x86
+		{FF4FFAA6-F065-4569-9EB0-CA60925CC62C}.Debug|x86.ActiveCfg = Debug|x86
+		{FF4FFAA6-F065-4569-9EB0-CA60925CC62C}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
