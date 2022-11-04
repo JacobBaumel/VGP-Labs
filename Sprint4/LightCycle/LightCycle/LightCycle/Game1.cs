@@ -9,21 +9,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BreadCrumbs {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+namespace LightCycle {
+
+    enum State {
+        START,
+        PLAY,
+        END
+    }
+
     public class Game1 : Microsoft.Xna.Framework.Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D ball;
-        Rectangle[] rects;
-        Vector2 center;
-        Color fade;
-        int xvel;
-        int yvel;
-        int count;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -38,20 +35,9 @@ namespace BreadCrumbs {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            rects = new Rectangle[11];
-            fade = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            center = new Vector2(250, 250);
-            xvel = 15;
-            yvel = 15;
-            count = 0;
-            int t = 0;
-            for(int i = 0; i < rects.Length; i++) {
-                rects[i] = new Rectangle(350, 190, 100 - t, 100 - t);
-                t += 10;
-            }
-
-            rects[0].X += xvel;
-            rects[0].Y += yvel;
+            graphics.PreferredBackBufferWidth = 752;
+            graphics.PreferredBackBufferHeight = 752;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -62,7 +48,7 @@ namespace BreadCrumbs {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            ball = Content.Load<Texture2D>("ball");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,21 +70,7 @@ namespace BreadCrumbs {
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            for(int i = Math.Min(count, rects.Length - 1); i >= 1; i--) {
-                rects[i].X = rects[i - 1].X;
-                rects[i].Y = rects[i - 1].Y;
-            }
-
-            if(rects[0].X - 50 < 0 || rects[0].X + rects[0].Width - 50 > 800)
-                xvel *= -1;
-
-            if(rects[0].Y - 50 < 0 || rects[0].Y + rects[0].Height - 50 > 480)
-                yvel *= -1;
-
-            rects[0].X += xvel;
-            rects[0].Y += yvel;
             // TODO: Add your update logic here
-            count++;
 
             base.Update(gameTime);
         }
@@ -110,22 +82,8 @@ namespace BreadCrumbs {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
             // TODO: Add your drawing code here
-            fade.A = 255;
-            fade.R = 255;
-            fade.G = 255;
-            fade.B = 255;
 
-            spriteBatch.Begin();
-            for(int i = 0; i < rects.Length; i++) {
-                spriteBatch.Draw(ball, rects[i], null, fade, 0, center, SpriteEffects.None, 0);
-                fade.A -= 20;
-                fade.R -= 20;
-                fade.G -= 20;
-                fade.B -= 20;
-            }
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

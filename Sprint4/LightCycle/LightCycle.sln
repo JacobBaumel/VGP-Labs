@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightCycle", "LightCycle\LightCycle\LightCycle.csproj", "{0C0F870D-8BF1-4165-A222-F1E8C75B8E80}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "LightCycleContent", "LightCycle\LightCycleContent\LightCycleContent.contentproj", "{70CA5FBB-51CB-481C-9AB3-F04492888041}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C0F870D-8BF1-4165-A222-F1E8C75B8E80}.Debug|x86.ActiveCfg = Debug|x86
+		{0C0F870D-8BF1-4165-A222-F1E8C75B8E80}.Debug|x86.Build.0 = Debug|x86
+		{0C0F870D-8BF1-4165-A222-F1E8C75B8E80}.Release|x86.ActiveCfg = Release|x86
+		{0C0F870D-8BF1-4165-A222-F1E8C75B8E80}.Release|x86.Build.0 = Release|x86
+		{70CA5FBB-51CB-481C-9AB3-F04492888041}.Debug|x86.ActiveCfg = Debug|x86
+		{70CA5FBB-51CB-481C-9AB3-F04492888041}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C475DE1-D80D-4E78-9F4B-425DD67F786F}
+	EndGlobalSection
+EndGlobal
