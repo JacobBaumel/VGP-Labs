@@ -11,16 +11,21 @@ using System.Linq;
 
 namespace LightCycle {
 
-    enum State {
-        START,
-        PLAY,
-        END
-    }
+    
 
     public class Game1 : Microsoft.Xna.Framework.Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Pixels pixels;
+        Cycle c1;
+        int time;
+        public static State state = State.START;
+        public enum State {
+            START,
+            PLAY,
+            P1,
+            P2
+        }
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -37,7 +42,9 @@ namespace LightCycle {
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferWidth = 752;
             graphics.PreferredBackBufferHeight = 752;
+            Window.AllowUserResizing = true;
             graphics.ApplyChanges();
+            time = 0;
             base.Initialize();
         }
 
@@ -48,7 +55,21 @@ namespace LightCycle {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Texture2D baseRect = new Texture2D(GraphicsDevice, 1, 1);
+            baseRect.SetData(new Color[] { Color.White });
+            pixels = new Pixels(Content.Load<Texture2D>("blue"), Content.Load<Texture2D>("orange"), baseRect);
 
+            // Sets wall pixels
+            for(int i = 0; i < pixels.pixels.GetLength(0); i++) {
+                pixels.pixels[0, i].set(Pixels.PixelState.LINE_SIDE);
+                pixels.pixels[pixels.pixels.GetLength(1) - 1, i].set(Pixels.PixelState.LINE_SIDE);
+            }
+            for(int i = 0; i < pixels.pixels.GetLength(1); i++) {
+                pixels.pixels[i, 0].set(Pixels.PixelState.LINE_SIDE);
+                pixels.pixels[i, pixels.pixels.GetLength(1) - 1].set(Pixels.PixelState.LINE_SIDE);
+            }
+
+            c1 = new Cycle(pixels, 5, 5, false);
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,8 +90,8 @@ namespace LightCycle {
             // Allows the game to exit
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            
 
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -80,8 +101,11 @@ namespace LightCycle {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
+            spriteBatch.Begin();
+            pixels.draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
