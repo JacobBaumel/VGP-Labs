@@ -10,9 +10,9 @@ namespace LightCycle {
         Pixels p;
         bool playerNum;
 
-        public Cycle(Pixels pixels, int x, int y, bool player) {
-            vx = 0;
-            vy = 0;
+        public Cycle(Pixels pixels, int x, int y, bool player, int _vx, int _vy) {
+            vx = _vx;
+            vy = _vy;
             fx = x;
             fy = y;
             p = pixels;
@@ -20,36 +20,34 @@ namespace LightCycle {
         }
 
         public void update() {
+            if(p.pixels[fx + vx, fy + vy].getState() != Pixels.PixelState.CLEAR && vx + vy != 0)
+                win();
+
             p.pixels[fx, fy].clear();
             p.pixels[fx + (vx * -1), fy + (vy * -1)].set(getLine());
 
             KeyboardState k = Keyboard.GetState();
-            bool e = false;
             if(k.IsKeyDown(getUp())) {
                 vx = 0;
                 vy = -1;
-                e = true;
                 setRot(270);
             }
 
             if(k.IsKeyDown(getDown())) {
                 vx = 0;
                 vy = 1;
-                e = true;
                 setRot(90);
             }
 
             if(k.IsKeyDown(getLeft())) {
                 vx = -1;
                 vy = 0;
-                e = true;
                 setRot(180);
             }
 
             if(k.IsKeyDown(getRight())) {
                 vx = 1;
                 vy = 0;
-                e = true;
                 setRot(0);
                 
             }
@@ -63,25 +61,33 @@ namespace LightCycle {
         }
 
         Keys getUp() {
-            if(playerNum)
+            if(vy > 0)
+                return Keys.None;
+            if(!playerNum)
                 return Keys.W;
             return Keys.Up;
         }
 
         Keys getDown() {
-            if(playerNum)
+            if(vy < 0)
+                return Keys.None;
+            if(!playerNum)
                 return Keys.S;
             return Keys.Down;
         }
 
         Keys getLeft() {
-            if(playerNum)
+            if(vx > 0)
+                return Keys.None;
+            if(!playerNum)
                 return Keys.A;
             return Keys.Left;
         }
 
         Keys getRight() {
-            if(playerNum)
+            if(vx < 0)
+                return Keys.None;
+            if(!playerNum)
                 return Keys.D;
             return Keys.Right;
         }

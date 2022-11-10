@@ -18,13 +18,30 @@ namespace LightCycle {
             p1Rot = 90;
             p2Rot = 0;
 
-            pixels = new Pixel[94, 94];
+            pixels = new Pixel[Game1.ARRAY_SIZE, Game1.ARRAY_SIZE];
             for(int i = 0; i < pixels.GetLength(0); i++) {
                 for(int j = 0; j < pixels.GetLength(1); j++) {
                     pixels[i, j] = new Pixel(i, j, this);
                 }
             }
 
+        }
+
+        public void reset() {
+            for(int i = 0; i < pixels.GetLength(0); i++) {
+                for(int j = 0; j < pixels.GetLength(1); j++) {
+                    pixels[i, j].set(PixelState.CLEAR);
+                }
+            }
+
+            for(int i = 0; i < pixels.GetLength(0); i++) {
+                pixels[0, i].set(Pixels.PixelState.LINE_SIDE);
+                pixels[pixels.GetLength(1) - 1, i].set(Pixels.PixelState.LINE_SIDE);
+            }
+            for(int i = 0; i < pixels.GetLength(1); i++) {
+                pixels[i, 0].set(Pixels.PixelState.LINE_SIDE);
+                pixels[i, pixels.GetLength(1) - 1].set(Pixels.PixelState.LINE_SIDE);
+            }
         }
 
         public void draw(SpriteBatch batch) {
@@ -48,7 +65,6 @@ namespace LightCycle {
         
 
         public class Pixel {
-            const int screenPixelSize = 8;
             static Color orange = new Color(255, 95, 31);
             static Color blue = new Color(35, 225, 233);
             static Color grey = new Color(125, 125, 125);
@@ -67,9 +83,9 @@ namespace LightCycle {
                 y = _y;
                 pixels = _pixels;
                 state = PixelState.CLEAR;
-                pixelRectangle = new Rectangle(x * screenPixelSize, y * screenPixelSize, screenPixelSize, screenPixelSize);
+                pixelRectangle = new Rectangle(x * Game1.PIXEL_SIZE, y * Game1.PIXEL_SIZE, Game1.PIXEL_SIZE, Game1.PIXEL_SIZE);
                 cycleCenter = new Vector2(63, 45);
-                cycleRect = new Rectangle(pixelRectangle.X + (screenPixelSize / 2), pixelRectangle.Y + (screenPixelSize / 2), screenPixelSize, screenPixelSize);
+                cycleRect = new Rectangle(pixelRectangle.X + (Game1.PIXEL_SIZE / 2), pixelRectangle.Y + (Game1.PIXEL_SIZE / 2), Game1.PIXEL_SIZE, Game1.PIXEL_SIZE);
             }
 
             public void set(PixelState p) {
@@ -78,6 +94,10 @@ namespace LightCycle {
 
             public void clear() {
                 state = PixelState.CLEAR;
+            }
+
+            public PixelState getState() {
+                return state;
             }
 
             public void render(SpriteBatch spriteBatch) {

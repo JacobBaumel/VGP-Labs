@@ -18,7 +18,26 @@ namespace LightCycle {
         SpriteBatch spriteBatch;
         Pixels pixels;
         Cycle c1;
-        int time;
+        Cycle c2;
+        SpriteFont font;
+        Random r;
+
+        Vector2 centertext;
+        Vector2 timerText;
+        Vector2 endscreenText;
+
+        bool showTimer;
+        int timer;
+        int frameTimer;
+
+        public const int WINDOW_SIZE = 1000;
+        public const int PIXEL_SIZE = 5;
+        public const int ARRAY_SIZE = WINDOW_SIZE / PIXEL_SIZE;
+        const int UPDATE_PERIOD = 2;
+        const string BEGIN_STRING = "PUSH SPACE TO BEGIN";
+        const string TIMER_STRING = "$";
+        const string END_STRING = "PLAYER $ WINS!\nPUSH SPACE TO PLAY AGAIN!";
+
         public static State state = State.START;
         public enum State {
             START,
@@ -40,11 +59,16 @@ namespace LightCycle {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = 752;
-            graphics.PreferredBackBufferHeight = 752;
-            Window.AllowUserResizing = true;
+            showTimer = false;
+            timer = 0;
+            r = new Random((int) DateTime.Now.Ticks);
+            frameTimer = 0;
+            centertext = new Vector2(175, 235);
+            timerText = new Vector2(330, 275);
+            graphics.PreferredBackBufferWidth = WINDOW_SIZE;
+            graphics.PreferredBackBufferHeight = WINDOW_SIZE;
+            Window.AllowUserResizing = false;
             graphics.ApplyChanges();
-            time = 0;
             base.Initialize();
         }
 
@@ -58,18 +82,16 @@ namespace LightCycle {
             Texture2D baseRect = new Texture2D(GraphicsDevice, 1, 1);
             baseRect.SetData(new Color[] { Color.White });
             pixels = new Pixels(Content.Load<Texture2D>("blue"), Content.Load<Texture2D>("orange"), baseRect);
+            pixels.reset();
 
-            // Sets wall pixels
-            for(int i = 0; i < pixels.pixels.GetLength(0); i++) {
-                pixels.pixels[0, i].set(Pixels.PixelState.LINE_SIDE);
-                pixels.pixels[pixels.pixels.GetLength(1) - 1, i].set(Pixels.PixelState.LINE_SIDE);
-            }
-            for(int i = 0; i < pixels.pixels.GetLength(1); i++) {
-                pixels.pixels[i, 0].set(Pixels.PixelState.LINE_SIDE);
-                pixels.pixels[i, pixels.pixels.GetLength(1) - 1].set(Pixels.PixelState.LINE_SIDE);
-            }
-
-            c1 = new Cycle(pixels, 5, 5, false);
+            font = Content.Load<SpriteFont>("SpriteFont1");
+            Vector2 temp = font.MeasureString(BEGIN_STRING);
+            centertext = new Vector2((WINDOW_SIZE - temp.X) / 2, (WINDOW_SIZE - temp.Y) / 2);
+            temp = font.MeasureString(TIMER_STRING);
+            timerText = new Vector2((WINDOW_SIZE - temp.X) / 2, (WINDOW_SIZE - temp.Y) / 2);
+            timerText.Y += 40;
+            temp = font.MeasureString(END_STRING);
+            endscreenText = new Vector2((WINDOW_SIZE - temp.X) / 2, (WINDOW_SIZE - temp.Y) / 2);
             // TODO: use this.Content to load your game content here
         }
 
@@ -90,8 +112,51 @@ namespace LightCycle {
             // Allows the game to exit
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
 
+            switch(state) {
+                case State.START:
+                    if(Keyboard.GetState().IsKeyDown(Keys.Space)) {
+                        if(!showTimer) {
+                            pixels.reset();
+                            int pixelPos = r.Next(0, ARRAY_SIZE);
+                            if(r.Next(0, 2) == 0) {
+                                c1 = new Cycle(pixels, pixelPos, 2, false, 0, 1);
+                                c2 = new Cycle(pixels, pixelPos, ARRAY_SIZE - 3, true, 0, -1);
+                            }
+
+                            else {
+                                c1 = new Cycle(pixels, 2, pixelPos, false, 1, 0);
+                                c2 = new Cycle(pixels, ARRAY_SIZE - 3, pixelPos, true, -1, 0);
+                            }
+                        }
+                        showTimer = true;
+                    }
+                    break;
+
+                case State.PLAY:
+                    frameTimer++;
+                    if(frameTimer % UPDATE_PERIOD == 0) {
+                        c1.update();
+                        c2.update();
+                    }
+                    break;
+
+                case State.P1:
+                case State.P2:
+                    if(Keyboard.GetState().IsKeyDown(Keys.Space))
+                        state = State.START;
+                    break;
+            }
+
+            if(showTimer && state == State.START) {
+                timer++;
+                if(timer % 60 == 0 && timer / 60 == 5) {
+                    state = State.PLAY;
+                    timer = 0;
+                    showTimer = false;
+                    
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -104,7 +169,27 @@ namespace LightCycle {
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            pixels.draw(spriteBatch);
+            switch(state) {
+                case State.START:
+                    spriteBatch.DrawString(font, BEGIN_STRING, centertext, Color.Teal);
+                    if(showTimer)
+                        spriteBatch.DrawString(font, "" + (5 - (timer / 60)), timerText, Color.Teal);
+                    break;
+
+                case State.PLAY:
+                    pixels.draw(spriteBatch);
+                    break;
+
+                case State.P1:
+                    pixels.draw(spriteBatch);
+                    spriteBatch.DrawString(font, "PLAYER 1 WINS!\nPUSH SPACE TO PLAY AGAIN!", endscreenText, Color.Cyan);
+                    break;
+
+                case State.P2:
+                    pixels.draw(spriteBatch);
+                    spriteBatch.DrawString(font, "PLAYER 2 WINS!\nPUSH SPACE TO PLAY AGAIN!", endscreenText, Color.Orange);
+                    break;
+            }
             spriteBatch.End();
             // TODO: Add your drawing code here
 
