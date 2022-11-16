@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BounceHouse", "BounceHouse\BounceHouse\BounceHouse.csproj", "{1292F734-E7F0-4802-9E5A-D6EB4AF0B0FC}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "BounceHouseContent", "BounceHouse\BounceHouseContent\BounceHouseContent.contentproj", "{9B90A7AA-8C88-4B0D-88B6-79175564E9AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1292F734-E7F0-4802-9E5A-D6EB4AF0B0FC}.Debug|x86.ActiveCfg = Debug|x86
+		{1292F734-E7F0-4802-9E5A-D6EB4AF0B0FC}.Debug|x86.Build.0 = Debug|x86
+		{1292F734-E7F0-4802-9E5A-D6EB4AF0B0FC}.Release|x86.ActiveCfg = Release|x86
+		{1292F734-E7F0-4802-9E5A-D6EB4AF0B0FC}.Release|x86.Build.0 = Release|x86
+		{9B90A7AA-8C88-4B0D-88B6-79175564E9AA}.Debug|x86.ActiveCfg = Debug|x86
+		{9B90A7AA-8C88-4B0D-88B6-79175564E9AA}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E890D85F-B9D4-49BC-B7F1-33105380FC4A}
+	EndGlobalSection
+EndGlobal
