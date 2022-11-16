@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckerBoard", "CheckerBoard\CheckerBoard\CheckerBoard.csproj", "{ACD9A16F-3752-490A-BDD0-3205455C1B9A}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "CheckerBoardContent", "CheckerBoard\CheckerBoardContent\CheckerBoardContent.contentproj", "{4DE9DE20-671A-41F9-8757-D91F9DF98FB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACD9A16F-3752-490A-BDD0-3205455C1B9A}.Debug|x86.ActiveCfg = Debug|x86
+		{ACD9A16F-3752-490A-BDD0-3205455C1B9A}.Debug|x86.Build.0 = Debug|x86
+		{ACD9A16F-3752-490A-BDD0-3205455C1B9A}.Release|x86.ActiveCfg = Release|x86
+		{ACD9A16F-3752-490A-BDD0-3205455C1B9A}.Release|x86.Build.0 = Release|x86
+		{4DE9DE20-671A-41F9-8757-D91F9DF98FB2}.Debug|x86.ActiveCfg = Debug|x86
+		{4DE9DE20-671A-41F9-8757-D91F9DF98FB2}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03652F1A-A633-4D02-945A-93257D0A691B}
+	EndGlobalSection
+EndGlobal
