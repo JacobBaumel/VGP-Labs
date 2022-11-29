@@ -5,9 +5,9 @@ using System.IO;
 
 namespace Breakout {
     class Bricks {
-        public const int BRICK_WIDTH = 10;
-        public const int BRICK_HEIGHT = 4;
-        public const int BRICK_LAYERS = 10;
+        public const int BRICK_WIDTH = 40;
+        public const int BRICK_HEIGHT = 15;
+        public const int BRICK_LAYERS = 40;
 
         Brick[,] bricks;
         Texture2D baseRect;
@@ -21,20 +21,23 @@ namespace Breakout {
                     for(int i = 0; i < bricks.GetLength(0); i++) {
                         string line = r.ReadLine();
                         for(int j = 0; j < bricks.GetLength(1); j++) {
-                            bricks[i, j] = new Brick(i * BRICK_WIDTH, j * BRICK_HEIGHT, baseRect, enumFromString(line[j]));
+                            bricks[i, j] = new Brick(j * BRICK_WIDTH, i * BRICK_HEIGHT, baseRect, enumFromString(line[j]));
                         }
                     }
-                } 
+                }
             } catch(Exception e) {
-                Console.WriteLine("Error initializing game!");
+                Console.WriteLine("Error starting game");
                 Console.WriteLine(e.Message);
             }
+            Console.WriteLine("");
         }
 
-        public void update() {
-            foreach(Brick b in bricks) {
-                
-            }
+        public void update(Rectangle ball) {
+            int ay = ball.Y / BRICK_LAYERS;
+            int ax = ball.X / Game1.SCREEN_WIDTH;
+            if(ay < bricks.GetLength(1) && bricks[ax, ay].state != BrickState.NONE && bricks[ax, ay].r.Intersects(ball)) {
+                bricks[ax, ay].state--;
+            } 
         }
 
         public void draw(SpriteBatch spriteBatch) {
@@ -43,7 +46,7 @@ namespace Breakout {
             }
         }
 
-        public enum BrickState {
+        public enum BrickState { // Game state can also represent HP because enums are integer backed
             NONE,
             RED,
             ORANGE,
@@ -74,9 +77,9 @@ namespace Breakout {
 
 
         class Brick {
-            Rectangle r;
+            public Rectangle r;
             Texture2D baseRect;
-            BrickState state;
+            public BrickState state;
 
             public Brick(int x, int y, Texture2D _baseRect, BrickState _state) {
                 r = new Rectangle(x, y, BRICK_WIDTH, BRICK_HEIGHT);
@@ -85,7 +88,8 @@ namespace Breakout {
             }
 
             public void draw(SpriteBatch spriteBatch) {
-                spriteBatch.Draw(baseRect, r, getColor());
+                if(state != BrickState.NONE)
+                    spriteBatch.Draw(baseRect, r, getColor());
             }
 
             private Color getColor() {

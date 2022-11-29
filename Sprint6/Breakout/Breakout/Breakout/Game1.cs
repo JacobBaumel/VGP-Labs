@@ -17,6 +17,7 @@ namespace Breakout {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Bricks b;
+        Player p;
 
         public const int SCREEN_WIDTH = 800;
         public const int SCREEN_HEIGHT = 900;
@@ -51,6 +52,7 @@ namespace Breakout {
             Texture2D baseRect = new Texture2D(GraphicsDevice, 1, 1);
             baseRect.SetData(new Color[] { Color.White });
             b = new Bricks(baseRect, @"Content/l1.txt");
+            p = new Player(Content.Load<Texture2D>("circle"), baseRect);
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,9 +71,11 @@ namespace Breakout {
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
             // Allows the game to exit
-            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            p.update();
+            b.update(p.circleRect);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -82,8 +86,12 @@ namespace Breakout {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
+            spriteBatch.Begin();
+            b.draw(spriteBatch);
+            p.draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
