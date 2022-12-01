@@ -51,7 +51,7 @@ namespace Breakout {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D baseRect = new Texture2D(GraphicsDevice, 1, 1);
             baseRect.SetData(new Color[] { Color.White });
-            b = new Bricks(baseRect, @"Content/l1.txt");
+            b = new Bricks(Content.Load<Texture2D>("brick"), @"Content/l1.txt");
             p = new Player(Content.Load<Texture2D>("circle"), baseRect);
             // TODO: use this.Content to load your game content here
         }
@@ -75,7 +75,7 @@ namespace Breakout {
                 this.Exit();
 
             p.update();
-            b.update(p.circleRect);
+            b.update(p);
             // TODO: Add your update logic here
 
             base.Update(gameTime);

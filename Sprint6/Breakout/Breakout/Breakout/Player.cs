@@ -38,60 +38,67 @@ namespace Breakout {
         }
 
         public void update() {
-            circleRect.X += vx;
-            circleRect.Y += vy;
-
-            if(circleRect.X < 0 || circleRect.X > Game1.SCREEN_WIDTH - CIRCLE_R)
-                vx *= -1;
-
-            if(circleRect.Y < 0 || circleRect.Y > Game1.SCREEN_HEIGHT - CIRCLE_R)
-                vy *= -1;
-
             KeyboardState k = Keyboard.GetState();
-            foreach(Keys s in watchKeys) {
-                if(k.IsKeyDown(s)) switch(s) {
-                        case Keys.A:
-                            rect.X -= 3;
-                            break;
 
-                        case Keys.D:
-                            rect.X += 3;
-                            break;
+            if(k.IsKeyUp(Keys.Q)) { // TODO take this out
+                circleRect.X += vx;
+                circleRect.Y += vy;
 
-                        case Keys.Space:
-                            if(vy == 0) {
-                                while(vy == 0) {
-                                    vy = r.Next(-6, -1);
+                if(circleRect.X < 0 || circleRect.X > Game1.SCREEN_WIDTH - CIRCLE_R)
+                    vx *= -1;
+
+                if(circleRect.Y < 0 || circleRect.Y > Game1.SCREEN_HEIGHT - CIRCLE_R)
+                    vy *= -1;
+
+                circleRect.Y = (int) MathHelper.Clamp(circleRect.Y, 0, Game1.SCREEN_HEIGHT - circleRect.Height);
+                circleRect.X = (int) MathHelper.Clamp(circleRect.X, 0, Game1.SCREEN_WIDTH - circleRect.Width);
+
+                foreach(Keys s in watchKeys) {
+                    if(k.IsKeyDown(s))
+                        switch(s) {
+                            case Keys.A:
+                                rect.X -= 3;
+                                break;
+
+                            case Keys.D:
+                                rect.X += 3;
+                                break;
+
+                            case Keys.Space:
+                                if(vy == 0) {
+                                    while(vy == 0) {
+                                        vy = r.Next(-6, -1);
+                                    }
+
+                                    do {
+                                        vx = r.Next(-4, 4);
+                                    } while(vx == 0);
+
+                                    circleRect.X = ((BUMPER_WIDTH - CIRCLE_R) / 2) + rect.X;
+                                    circleRect.Y = rect.Y - CIRCLE_R - CIRCLE_R;
                                 }
+                                break;
 
-                                do {
-                                    vx = r.Next(-4, 4);
-                                } while(vx == 0);
+                            default:
+                                break;
+                        }
+                }
 
-                                circleRect.X = ((BUMPER_WIDTH - CIRCLE_R) / 2) + rect.X;
-                                circleRect.Y = rect.Y - CIRCLE_R - CIRCLE_R;
-                            }
-                            break;
+                rect.X = (int) MathHelper.Clamp(rect.X, 0, Game1.SCREEN_WIDTH - BUMPER_WIDTH);
 
-                        default:
-                            break;
-                    }
-            }
+                if(rect.Intersects(circleRect)) {
+                    if(circleRect.Y + circleRect.Width > rect.Y + Math.Abs(vy) + 1) {
+                        if(circleRect.X < rect.X + (rect.Width / 2)) {
+                            vx = copySign(vy, -1);
+                        }
 
-            rect.X = (int) MathHelper.Clamp(rect.X, 0, Game1.SCREEN_WIDTH - BUMPER_WIDTH);
-
-            if(rect.Intersects(circleRect)) {
-                if(circleRect.Y + circleRect.Width > rect.Y + Math.Abs(vy) + 1) {
-                    if(circleRect.X < rect.X + (rect.Width / 2)) {
-                        vx = copySign(vy, -1);
+                        else
+                            vx = copySign(vy, 1);
                     }
 
                     else
-                        vx = copySign(vy, 1);
+                        vy *= -1;
                 }
-
-                else
-                    vy *= -1;
             }
         }
 
