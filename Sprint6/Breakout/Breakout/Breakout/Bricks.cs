@@ -52,7 +52,7 @@ namespace Breakout {
             }
         }
 
-        void bounceBrick(Player p, Brick b) { // Instead of just checking one brickj at a time, treat multiple bricks as one by just checking 4 edges
+        void bounceBrick(Player p, Brick b) { // Instead of just checking one brickj at a time, treat multiple bricks as one by just checking the 4 edges around the ball
             if(b.r.Intersects(p.circleRect)) {
                 b.state--;
 
