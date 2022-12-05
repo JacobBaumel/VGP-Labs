@@ -43,8 +43,8 @@ namespace Breakout {
             foreach(Brick b in bricks)
                 if(b.state != BrickState.NONE)
                     isOver = false;
-            for(int i = 0; i <= 1; i++) {
-                for(int j = 0; j <= 1; j++) {
+            for(int i = -1; i <= 1; i += 2) { // THIS LOOP HAS BEEN CHANGED!!!
+                for(int j = -1; j <= 1; j += 2) {
                     if(ay + i < 0 || ax + j < 0 || ay + i >= bricks.GetLength(0) || ax + j >= bricks.GetLength(1) || bricks[ay + i, ax + j].state == BrickState.NONE)
                         continue;
                     bounceBrick(p, bricks[ay + i, ax + j]);
@@ -56,18 +56,20 @@ namespace Breakout {
             if(b.r.Intersects(p.circleRect)) {
                 b.state--;
 
+                // Left brick cant possibly be hit from the top, so you only need to check that edge, same for other directions
 
-                if(p.circleRect.X <= b.r.X + p.vx)
-                    copySign(ref p.vx, -1);
 
-                else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
-                    copySign(ref p.vx, 1);
+                //if(p.circleRect.X <= b.r.X + p.vx)
+                //    copySign(ref p.vx, -1);
 
-                else if(p.circleRect.Y >= b.r.Y + b.r.Height + p.vy)
-                    copySign(ref p.vy, 1);
+                //else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
+                //    copySign(ref p.vx, 1);
 
-                else
-                    copySign(ref p.vy, -1);
+                //else if(p.circleRect.Y >= b.r.Y + b.r.Height + p.vy)
+                //    copySign(ref p.vy, 1);
+
+                //else
+                //    copySign(ref p.vy, -1);
 
                 //if(p.circleRect.Y < b.r.Y) {
                 //    if(p.circleRect.X <= b.r.X + p.vx)
