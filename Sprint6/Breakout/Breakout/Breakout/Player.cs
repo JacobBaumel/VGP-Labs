@@ -10,12 +10,13 @@ namespace Breakout {
         const int BUMPER_Y = 40;
         const int CIRCLE_R = 20;
         const int CIRCLE_Y = 60;
-        Keys[] watchKeys = {Keys.A, Keys.D, Keys.Space};
+        Keys[] watchKeys = { Keys.A, Keys.D, Keys.Space };
         Random r;
 
         public int vx;
         public int vy;
-        
+        public bool end;
+
         Texture2D circle;
         Texture2D baseRect;
 
@@ -26,10 +27,15 @@ namespace Breakout {
             r = new Random((int) DateTime.Now.Ticks);
             circle = _circle;
             baseRect = _baseRect;
+            reset();
+        }
+
+        public void reset() {
             vx = 0;
             vy = 0;
             circleRect = new Rectangle((Game1.SCREEN_WIDTH - CIRCLE_R) / 2, Game1.SCREEN_HEIGHT - CIRCLE_Y, CIRCLE_R, CIRCLE_R);
             rect = new Rectangle((Game1.SCREEN_WIDTH - BUMPER_WIDTH) / 2, Game1.SCREEN_HEIGHT - BUMPER_Y, BUMPER_WIDTH, BUMPER_HEIGHT);
+            end = false;
         }
 
         public void draw(SpriteBatch spriteBatch) {
@@ -38,68 +44,73 @@ namespace Breakout {
         }
 
         public void update() {
+            if(circleRect.Bottom >= Game1.SCREEN_HEIGHT) {
+                end = true;
+                return;
+            }
+
             KeyboardState k = Keyboard.GetState();
 
-            if(k.IsKeyUp(Keys.Q)) { // TODO take this out
-                circleRect.X += vx;
-                circleRect.Y += vy;
 
-                if(circleRect.X < 0 || circleRect.X > Game1.SCREEN_WIDTH - CIRCLE_R)
-                    vx *= -1;
+            circleRect.X += vx;
+            circleRect.Y += vy;
 
-                if(circleRect.Y < 0 || circleRect.Y > Game1.SCREEN_HEIGHT - CIRCLE_R)
-                    vy *= -1;
+            if(circleRect.X < 0 || circleRect.X > Game1.SCREEN_WIDTH - CIRCLE_R)
+                vx *= -1;
 
-                circleRect.Y = (int) MathHelper.Clamp(circleRect.Y, 0, Game1.SCREEN_HEIGHT - circleRect.Height);
-                circleRect.X = (int) MathHelper.Clamp(circleRect.X, 0, Game1.SCREEN_WIDTH - circleRect.Width);
+            if(circleRect.Y < 0 || circleRect.Y > Game1.SCREEN_HEIGHT - CIRCLE_R)
+                vy *= -1;
 
-                foreach(Keys s in watchKeys) {
-                    if(k.IsKeyDown(s))
-                        switch(s) {
-                            case Keys.A:
-                                rect.X -= 3;
-                                break;
+            circleRect.Y = (int) MathHelper.Clamp(circleRect.Y, 0, Game1.SCREEN_HEIGHT - circleRect.Height);
+            circleRect.X = (int) MathHelper.Clamp(circleRect.X, 0, Game1.SCREEN_WIDTH - circleRect.Width);
 
-                            case Keys.D:
-                                rect.X += 3;
-                                break;
+            foreach(Keys s in watchKeys) {
+                if(k.IsKeyDown(s))
+                    switch(s) {
+                        case Keys.A:
+                            rect.X -= 3;
+                            break;
 
-                            case Keys.Space:
-                                if(vy == 0) {
-                                    while(vy == 0) {
-                                        vy = r.Next(-6, -1);
-                                    }
+                        case Keys.D:
+                            rect.X += 3;
+                            break;
 
-                                    do {
-                                        vx = r.Next(-4, 4);
-                                    } while(vx == 0);
-
-                                    circleRect.X = ((BUMPER_WIDTH - CIRCLE_R) / 2) + rect.X;
-                                    circleRect.Y = rect.Y - CIRCLE_R - CIRCLE_R;
+                        case Keys.Space:
+                            if(vy == 0) {
+                                while(vy == 0) {
+                                    vy = r.Next(-6, -1);
                                 }
-                                break;
 
-                            default:
-                                break;
-                        }
-                }
+                                do {
+                                    vx = r.Next(-4, 4);
+                                } while(vx == 0);
 
-                rect.X = (int) MathHelper.Clamp(rect.X, 0, Game1.SCREEN_WIDTH - BUMPER_WIDTH);
+                                circleRect.X = ((BUMPER_WIDTH - CIRCLE_R) / 2) + rect.X;
+                                circleRect.Y = rect.Y - CIRCLE_R - CIRCLE_R;
+                            }
+                            break;
 
-                if(rect.Intersects(circleRect)) {
-                    if(circleRect.Y + circleRect.Width > rect.Y + Math.Abs(vy) + 1) {
-                        if(circleRect.X < rect.X + (rect.Width / 2)) {
-                            vx = copySign(vy, -1);
-                        }
+                        default:
+                            break;
+                    }
+            }
 
-                        else
-                            vx = copySign(vy, 1);
+            rect.X = (int) MathHelper.Clamp(rect.X, 0, Game1.SCREEN_WIDTH - BUMPER_WIDTH);
+
+            if(rect.Intersects(circleRect)) {
+                if(circleRect.Y + circleRect.Width > rect.Y + Math.Abs(vy) + 1) {
+                    if(circleRect.X < rect.X + (rect.Width / 2)) {
+                        vx = copySign(vy, -1);
                     }
 
                     else
-                        vy *= -1;
+                        vx = copySign(vy, 1);
                 }
+
+                else
+                    vy *= -1;
             }
+
         }
 
         private int copySign(int val, int sign) {
