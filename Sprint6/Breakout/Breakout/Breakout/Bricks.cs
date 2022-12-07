@@ -39,12 +39,14 @@ namespace Breakout {
             int ay = p.circleRect.Y / (BRICK_HEIGHT);
             int ax = (p.circleRect.X / (Game1.SCREEN_WIDTH / BRICK_WIDTH)) / 2;
             Console.WriteLine("Size: " + bricks.GetLength(1) + "  " + bricks.GetLength(0) + "\n Pos: " + ax + "   " + ay);
+
             isOver = true;
             foreach(Brick b in bricks)
                 if(b.state != BrickState.NONE)
-                    isOver = false;
-            for(int i = -1; i <= 1; i += 2) { // THIS LOOP HAS BEEN CHANGED!!!
-                for(int j = -1; j <= 1; j += 2) {
+                    isOver = false; 
+
+            for(int i = 0; i <= 1; i++) {
+                for(int j = 0; j <= 1; j++) {
                     if(ay + i < 0 || ax + j < 0 || ay + i >= bricks.GetLength(0) || ax + j >= bricks.GetLength(1) || bricks[ay + i, ax + j].state == BrickState.NONE)
                         continue;
                     bounceBrick(p, bricks[ay + i, ax + j]);
@@ -52,55 +54,41 @@ namespace Breakout {
             }
         }
 
-        void bounceBrick(Player p, Brick b) { // Instead of just checking one brickj at a time, treat multiple bricks as one by just checking the 4 edges around the ball
+        void bounceBrick(Player p, Brick b) {
             if(b.r.Intersects(p.circleRect)) {
                 b.state--;
 
-                // Left brick cant possibly be hit from the top, so you only need to check that edge, same for other directions
+                if(p.circleRect.Y < b.r.Y) {
+                    if(p.circleRect.X <= b.r.X + p.vx)
+                        p.vx = copySign(p.vx, -1);
 
+                    else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
+                        p.vx = copySign(p.vx, -1);
 
-                //if(p.circleRect.X <= b.r.X + p.vx)
-                //    copySign(ref p.vx, -1);
+                    else
+                        p.vy = copySign(p.vy, -1);
+                }
 
-                //else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
-                //    copySign(ref p.vx, 1);
+                else {
+                    if(p.circleRect.X <= b.r.X + p.vx)
+                        p.vx = copySign(p.vx, -1);
 
-                //else if(p.circleRect.Y >= b.r.Y + b.r.Height + p.vy)
-                //    copySign(ref p.vy, 1);
+                    else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
+                        p.vx = copySign(p.vx, -1);
 
-                //else
-                //    copySign(ref p.vy, -1);
-
-                //if(p.circleRect.Y < b.r.Y) {
-                //    if(p.circleRect.X <= b.r.X + p.vx)
-                //        p.vx = copySign(p.vx, -1);
-
-                //    else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
-                //        p.vx = copySign(p.vx, -1);
-
-                //    else
-                //        p.vy = copySign(p.vy, -1);
-                //}
-
-                //else {
-                //    if(p.circleRect.X <= b.r.X + p.vx)
-                //        p.vx = copySign(p.vx, -1);
-
-                //    else if(p.circleRect.X >= b.r.X + b.r.Width + p.vx)
-                //        p.vx = copySign(p.vx, -1);
-
-                //    else p.vy = copySign(p.vy, 1);
-                //}
+                    else
+                        p.vy = copySign(p.vy, 1);
+                }
             }
         }
 
-        private void copySign(ref int val, int sign) {
+        private int copySign(int val, int sign) {
             if(sign < 0)
-                val = -Math.Abs(val);
+                return -Math.Abs(val);
             else if(sign == 0)
-                val = 0;
+                return 0;
             else
-                val = Math.Abs(val);
+                return Math.Abs(val);
         }
 
         public void draw(SpriteBatch spriteBatch) {
