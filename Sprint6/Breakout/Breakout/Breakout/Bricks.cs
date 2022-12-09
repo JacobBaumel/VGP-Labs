@@ -86,7 +86,7 @@ namespace Breakout {
             if(sign < 0)
                 return -Math.Abs(val);
             else if(sign == 0)
-                return 0;
+                return val;
             else
                 return Math.Abs(val);
         }

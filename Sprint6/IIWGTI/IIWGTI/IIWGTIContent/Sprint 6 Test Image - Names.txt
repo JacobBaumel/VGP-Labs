@@ -1,0 +1,16 @@
+Computer Science 2 225x175
+Computer Science 1 310x100
+Computer Science 3 400x200
+Computer Science 4 75x250 
+English 1 100x100
+English 4 100x300
+English 2 150x100
+English 3 200x150
+Math 2 125x100
+Math 3 300x100
+Math 4 300x300
+Math 1 75x50
+PE 4 250x250
+PE 3 500x500
+PE 2 50x50
+PE 1 75x75
