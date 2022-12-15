@@ -1,0 +1,9 @@
+﻿8
+0 0 25 6 (Idle Animation 1)
+0 6 25 6 (Idle Animation 2)
+25 0 25 6 (Straight Animation 1)
+25 6 25 6 (Straight Animation 2)
+50 0 25 6 (Down Animation 1)
+50 6 25 6 (Down Animation 2)
+75 0 25 6 (Up Animation 1)
+75 6 25 6 (Up Animation 2)
