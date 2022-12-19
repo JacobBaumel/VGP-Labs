@@ -17,25 +17,38 @@ namespace Stargate {
     }
 
     public class Game1 : Microsoft.Xna.Framework.Game {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public const int SCREEN_WIDTH = 1000;
         public const int SCREEN_HEIGHT = 550;
+        public const int GAME_WIDTH = 2000;
         public static int SCREENPOS = 0;
 
-        Texture2D DELTEMELATER;
-        Rectangle REMOVEMELATER = new Rectangle(500, 500, 20, 20);
+        public Texture2D baseRect;
 
-        Spaceship s;
+        public Spaceship s;
+        public List<Alien> aliens;
+        public List<Humanoid> humans;
+
+        Random rand;
+
+        int wave;
+
+        public Spaceship GetSpaceship() {
+            return s;
+        }
+
+        //textures
         Texture2D ship;
         Rectangle[] shipSource;
+        Texture2D mobs;
+        Rectangle[] mobSource;
+
+        Texture2D bulletsTexture;
 
         //keeps track of whether we are on the menu or playing the game or on the game over screen
         public GameState currentState;
-
-        //velocity that affects everything because of the screen moving
-        public int screenVelocity;
 
         public Game1() 
         {
@@ -50,6 +63,11 @@ namespace Stargate {
         protected override void Initialize() 
         {
             currentState = GameState.Menu;
+            wave = 0;
+            humans = new List<Humanoid>();
+            rand = new Random();
+            aliens = new List<Alien>();
+            currentState = GameState.Playing;
             
             base.Initialize();
         }
@@ -76,13 +94,23 @@ namespace Stargate {
         protected override void LoadContent() 
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            //ship textures
             ship = Content.Load<Texture2D>("Ship");
-
             ParseSheet(@"Content/ShipSource.txt", ref shipSource);
-            s = new Spaceship(ship, shipSource);
+            //mob textures
+            mobs = Content.Load<Texture2D>("Mobs");
+            ParseSheet(@"Content/MobSource.txt", ref mobSource);
 
-            DELTEMELATER = new Texture2D(GraphicsDevice, 1, 1);
-            DELTEMELATER.SetData(new Color[] { Color.White });
+            for (int i = 0; i < 1; i++)
+            {
+                humans.Add(new Humanoid(mobs, mobSource[0], new Point(rand.Next(0,GAME_WIDTH - 10),0)));
+            }
+
+            bulletsTexture = Content.Load<Texture2D>("Bullet");
+            s = new Spaceship(ship, shipSource, bulletsTexture);
+
+            baseRect = new Texture2D(GraphicsDevice, 1, 1);
+            baseRect.SetData(new Color[] { Color.White });
 
         }
 
@@ -104,7 +132,26 @@ namespace Stargate {
             }
             else if(currentState == GameState.Playing) 
             {
-                //GAME RUNNING HERE
+                foreach(Alien a in aliens) {
+                    a.update();
+                }
+
+                for(int i = 0; i < aliens.Count; i++) 
+                {
+                    if (s.areBulletsIntersecting(aliens[i].rect)) {
+                        aliens.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                s.update();
+
+                if(aliens.Count() == 0) {
+                    wave++;
+                    for(int i = 0; i < 10; i++) {
+                        aliens.Add(new Lander(mobs, mobSource, humans));// TODO: Replace with a randomizer to spawn other types of aliens
+                    }
+                }                
 
             }
 
@@ -115,19 +162,14 @@ namespace Stargate {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             s.draw(spriteBatch);
-            Rectangle temp = REMOVEMELATER;
-            temp.X -= SCREENPOS;
-            spriteBatch.Draw(DELTEMELATER, temp, Color.White);
-            if(currentState == GameState.Menu) 
-            {
-                //DRAW MENU HERE
+            humans[0].draw(spriteBatch);
 
-            }
-            else if (currentState == GameState.Playing)
-            {
-                //DRAW GAME HERE
 
-            }
+            
+                foreach(Alien a in aliens)
+                    a.draw(spriteBatch);
+
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }

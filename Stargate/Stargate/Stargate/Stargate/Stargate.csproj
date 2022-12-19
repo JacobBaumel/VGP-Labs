@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alien.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="Humanoid.cs" />
     <Compile Include="Lander.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
