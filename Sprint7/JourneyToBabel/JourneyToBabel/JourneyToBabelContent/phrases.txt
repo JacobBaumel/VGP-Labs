@@ -1,0 +1,14 @@
+start 
+Would you like to play a game? 
+Te gustaria jugar un juego? 
+Willst du ein Spiel spielen? 
+ 
+save 
+Saving the game 
+Guardando el juego 
+Speichern des Spiels 
+ 
+done 
+Game Over 
+Juego terminado 
+Spiel ist aus 

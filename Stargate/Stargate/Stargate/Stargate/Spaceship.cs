@@ -88,8 +88,8 @@ namespace Stargate {
             timer += .2;
 
 
-            rect.X = (int) MathHelper.Clamp(rect.X, 0, 2000);
-            rect.Y = (int) MathHelper.Clamp(rect.Y, 0, 2000);
+            rect.X = (int) MathHelper.Clamp(rect.X, 0, Game1.GAME_WIDTH);
+            rect.Y = (int) MathHelper.Clamp(rect.Y, 0, Game1.SCREEN_HEIGHT - rect.Height);
             if(rect.X < Game1.SCREENPOS + 200 || rect.X > Game1.SCREENPOS + 800) Game1.SCREENPOS += (int) vx;
 
             Console.WriteLine(rect.X + "   " + Game1.SCREENPOS);

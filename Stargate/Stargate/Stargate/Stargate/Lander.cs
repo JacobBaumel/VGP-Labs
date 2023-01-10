@@ -18,7 +18,7 @@ namespace Stargate {
             //Randomly generate a spawn point above ground(y value 40)
             this.humans = humans;
             Random rand = new Random();
-            this.rect = new Rectangle(rand.Next(0, Game1.GAME_WIDTH - 32), rand.Next(40, Game1.SCREEN_HEIGHT), 32, 36); //lander has dimensions of 8x9 i think but we make it bigger x3
+            this.rect = new Rectangle(rand.Next(0, Game1.GAME_WIDTH - 32), rand.Next(40, Game1.SCREEN_HEIGHT - 36), 32, 36); //lander has dimensions of 8x9 i think but we make it bigger x3
             this.texture = texture;
             this.sourceList = sourceList;
             this.source = sourceList[0];
