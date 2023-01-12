@@ -1,0 +1,15 @@
+65
+60 2
+61 8
+62 8
+63 8
+64 4 
+
+Format is:
+Total tiles
+tile_number number_of_animation_frames 
+
+ex:
+60 2
+
+tile 60 has 2 animation frames

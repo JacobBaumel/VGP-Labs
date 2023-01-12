@@ -23,6 +23,7 @@ namespace FileWriter {
         int num2;
         Keys[] watchkeys;
         KeyboardState old;
+        string filepath;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -42,7 +43,7 @@ namespace FileWriter {
             num1 = 0;
             num2 = 0;
             watchkeys = new Keys[] { Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9 };
-            Console.WriteLine(Directory.GetCurrentDirectory());
+            filepath = @"..\..\..\..\..\..\Test.Dat";
             base.Initialize();
         }
 
@@ -53,7 +54,7 @@ namespace FileWriter {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            font = Content.Load<SpriteFont>("SpriteFont1");
             // TODO: use this.Content to load your game content here
         }
 
@@ -91,8 +92,43 @@ namespace FileWriter {
                     }
                     break;
 
-                case 2:
+                case 1:
+                    if(k.IsKeyDown(Keys.Y) && old.IsKeyUp(Keys.Y))
+                        numToWrite++;
+                    else if(k.IsKeyDown(Keys.N) && old.IsKeyUp(Keys.N)) {
+                        num1 = 0;
+                        numToWrite--;
+                    }
+                    break;
 
+                case 2:
+                    if(k.IsKeyDown(Keys.Enter) && old.IsKeyUp(Keys.Enter)) {
+                        numToWrite++;
+                        break;
+                    }
+
+                    for(int i = 0; i < watchkeys.Length; i++) {
+                        if(k.IsKeyDown(watchkeys[i]) && old.IsKeyUp(watchkeys[i])) {
+                            num2 *= 10;
+                            num2 += i;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    if(k.IsKeyDown(Keys.Y) && old.IsKeyUp(Keys.Y))
+                        numToWrite++;
+                    else if(k.IsKeyDown(Keys.N) && old.IsKeyUp(Keys.N)) {
+                        num2 = 0;
+                        numToWrite--;
+                    }
+                    break;
+                case 4:
+                    StreamWriter w = new StreamWriter(filepath, false);
+                    w.WriteLine(num1);
+                    w.WriteLine(num2);
+                    w.Close();
+                    numToWrite++;
                     break;
             }
             
@@ -126,7 +162,7 @@ namespace FileWriter {
                     break;
 
                 default:
-                    spriteBatch.DrawString(font, @"File ..\..\..\..\..\..\Test.Dat has been written to with numbers " + num1 + " and " + num2 + ", push ESC to exit", Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(font, @"File " + filepath + " has been written to with numbers " + num1 + " and " + num2 + ", push ESC to exit", Vector2.Zero, Color.White);
                     break;
             }
             spriteBatch.End();
