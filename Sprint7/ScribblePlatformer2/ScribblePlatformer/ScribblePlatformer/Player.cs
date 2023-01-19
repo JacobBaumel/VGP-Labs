@@ -19,7 +19,7 @@ namespace ScribblePlatformer {
         private const float MaxJumpTime = 0.35f;
         private const float JumpLaunchVelocity = -4000f;
         private const float GravityAccelaration = 3500f;
-        private const float MaxFallSpeed = 600f;
+        private const float MaxFallSpeed = -600f;
         private const float JumpControlPower = 0.14f;
 
         private const float MoveStickScale = 1f;
@@ -148,6 +148,11 @@ namespace ScribblePlatformer {
             isJumping = false;
         }
 
+        public void draw(GameTime time, SpriteBatch spriteBatch) {
+            Rectangle source = new Rectangle(0, 0, playerSprite.Width, playerSprite.Height);
+            spriteBatch.Draw(playerSprite, position, source, Color.White, 0, Origin, 1.0f, SpriteEffects.None, 0);
+        }
+
         private void ApplyPhysics(GameTime time) {
             float elapsed = (float) time.ElapsedGameTime.TotalSeconds;
             Vector2 previousPosition = Position;
@@ -187,17 +192,19 @@ namespace ScribblePlatformer {
                 }
 
                 else {
-                    jumpTime = 0;
+                    jumpTime = 0.0f;
                 }
             }
            
             else {
-                jumpTime = 0;
+                jumpTime = 0.0f; 
             }
 
             wasJumping = isJumping;
             return vY;
         }
+
+        private float previousBottom;
 
         private void HandleCollisions() {
             Rectangle bounds = BoundingRectangle;
@@ -219,7 +226,7 @@ namespace ScribblePlatformer {
                             float absDepthX = Math.Abs(depth.X);
                             float absDepthY = Math.Abs(depth.Y);
 
-                            if(absDepthY < absDepthX || collision = TileCollision.Platform) {
+                            if(absDepthY < absDepthX || collision == TileCollision.Platform) {
                                 if(previousBottom <= tileBounds.Top)
                                     isOnGround = true;
 
@@ -230,6 +237,7 @@ namespace ScribblePlatformer {
                             }
 
                             else if(collision == TileCollision.Impassable) {
+                                Console.WriteLine("xing   " + depth);
                                 Position = new Vector2(Position.X + depth.X, Position.Y);
                                 bounds = BoundingRectangle;
                             }
@@ -239,7 +247,7 @@ namespace ScribblePlatformer {
                 }
             }
 
-            previousBottom = bounds.Bottom; // ??? what is previousBottom
+            previousBottom = bounds.Bottom;
         }
     }
 }

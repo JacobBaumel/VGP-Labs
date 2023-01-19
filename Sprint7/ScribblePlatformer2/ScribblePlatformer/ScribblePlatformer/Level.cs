@@ -22,6 +22,15 @@ namespace ScribblePlatformer {
             }
         }
 
+        public Player Player {
+            get {
+                return player;
+            }
+        }
+
+        Player player;
+        private Vector2 start;
+
         private const int TileWidth = 64;
         private const int TileHeight = 64;
         private const int TilesPerRow = 5;
@@ -61,15 +70,21 @@ namespace ScribblePlatformer {
             LoadTiles(path);
         }
 
-        public void Draw(GameTime time, SpriteBatch spriteBatch) {
-            DrawTiles(spriteBatch);
+        public void Update(GameTime time) {
+            Player.Update(time);
         }
 
-        private void DrawTiles(SpriteBatch spriteBatch) {
+        public void Draw(GameTime time, SpriteBatch spriteBatch, bool drawHitboxes) {
+            DrawTiles(spriteBatch, drawHitboxes);
+            player.draw(time, spriteBatch);
+        }
+
+        private void DrawTiles(SpriteBatch spriteBatch, bool drawHitboxes) {
             for(int y = 0; y < Height; ++y) {
                 for(int x = 0; x < Width; ++x) {
                     if(tileSheets.ContainsKey(tiles[x, y].TileSheetName)) {
                         Vector2 position = new Vector2(x, y) * Tile.Size;
+                        if(drawHitboxes) // height of tiles is too big so character is getting caught on the edge and phasing through everything
                         spriteBatch.Draw(tileSheets[tiles[x, y].TileSheetName], position, TileSourceRecs[tiles[x, y].TileSheetIndex], Color.White);
                     }
                 }
@@ -109,10 +124,29 @@ namespace ScribblePlatformer {
             }
         }
 
+        public TileCollision GetCollision(int x, int y) {
+            if(x < 0 || x >= Width)
+                return TileCollision.Impassable;
+            if(y < 0 || y >= Height)
+                return TileCollision.Passable;
+
+            return tiles[x, y].Collision;
+        }
+
+        public Rectangle GetBounds(int x, int y) {
+            if(x < 0 || y < 0 || x >= Width || y >= Height)
+                return new Rectangle(x * Tile.Width, y * Tile.Height, Tile.Width, Tile.Height);
+
+            if(tiles[x, y].Collision == TileCollision.Platform)
+                return new Rectangle(x * Tile.Width, (y * Tile.Height) + 20, Tile.Width, Tile.Height - 20);
+
+            return new Rectangle(x * Tile.Width, (y * Tile.Height) + 5, Tile.Width, Tile.Height - 5);
+        }
+
         private Tile LoadTile(char type, int x, int y) {
             switch(type) {
                 case '.':
-                    return new Tile(String.Empty, 0);
+                    return new Tile(String.Empty, 0, TileCollision.Passable);
 
                 case 'B':
                     return LoadVarietyTile("Platforms", 0, 5);
@@ -145,6 +179,9 @@ namespace ScribblePlatformer {
                 case 'y':
                     return LoadVarietyTile("Blocks", 20, 5);
 
+                case '+':
+                    return LoadStartTile(x, y);
+
 
                 default:
                     throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at positoin {1}, {2}", type, x, y));
@@ -154,7 +191,17 @@ namespace ScribblePlatformer {
         private Tile LoadVarietyTile(string sheetName, int colorRow, int variationCount) {
             int index = random.Next(variationCount);
             int tileSheetIndex = colorRow + index;
-            return new Tile(sheetName, tileSheetIndex);
+            return new Tile(sheetName, tileSheetIndex, sheetName == "Blocks" ? TileCollision.Impassable : TileCollision.Platform);
+            ;
+        }
+
+        private Tile LoadStartTile(int x, int y) {
+            if(Player != null)
+                throw new NotSupportedException("Level can only have one starting point!");
+
+            start = new Vector2((x * 64) + 48, (y * 64) + 16);
+            player = new Player(this, start);
+            return new Tile(String.Empty, 0, TileCollision.Passable);
         }
 
 

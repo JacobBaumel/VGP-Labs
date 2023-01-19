@@ -44,9 +44,9 @@ namespace ScribblePlatformer {
         }
 
         protected override void Update(GameTime gameTime) {
-            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-
+            level.Update(gameTime);
             base.Update(gameTime);
         }
 

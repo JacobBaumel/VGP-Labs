@@ -19,7 +19,7 @@ namespace ScribblePlatformer {
             float minDistanceX = halfWidthA + halfWidthB;
             float minDistanceY = halfHeightA + halfHeightB;
 
-            if(Math.Abs(distanceX) >= minDistanceX || Math.Abs(minDistanceY) >= minDistanceY)
+            if(Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
                 return Vector2.Zero;
 
             float depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
