@@ -4,16 +4,14 @@ using Microsoft.Xna.Framework;
 
 namespace ScribblePlatformer {
     public static class RectangleExtensions {
-        public static Vector2 GetIntersectionDepth(this Rectangle rectA, Rectangle rectB) {
-            if(!rectA.Intersects(rectB)) return Vector2.Zero;
-            float halfWidthA = rectA.Width / 2.0f;
-            float halfHeightA = rectA.Height / 2.0f;
+        public static Vector2 GetIntersectionDepth(this Rectangle _rectA, Rectangle _rectB) {
+            float halfWidthA = _rectA.Width / 2.0f;
+            float halfHeightA = _rectA.Height / 2.0f;
+            float halfWidthB = _rectB.Width / 2.0f;
+            float halfHeightB = _rectB.Height / 2.0f;
 
-            float halfWidthB = rectB.Width / 2.0f;
-            float halfHeightB = rectB.Height / 2.0f;
-
-            Vector2 centerA = new Vector2(rectA.Left + halfWidthA, rectA.Top + halfHeightA);
-            Vector2 centerB = new Vector2(rectB.Left + halfWidthB, rectB.Top + halfHeightB);
+            Vector2 centerA = new Vector2(_rectA.Left + halfWidthA, _rectA.Top + halfHeightA);
+            Vector2 centerB = new Vector2(_rectB.Left + halfWidthB, _rectB.Height + halfHeightA);
 
             float distanceX = centerA.X - centerB.X;
             float distanceY = centerA.Y - centerB.Y;

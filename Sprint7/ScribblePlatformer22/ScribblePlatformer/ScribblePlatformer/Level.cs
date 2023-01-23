@@ -14,6 +14,15 @@ namespace ScribblePlatformer {
         private Dictionary<string, Texture2D> tileSheets;
         private Dictionary<int, Rectangle> TileSourceRecs;
 
+        Player player;
+        public Player Player {
+            get {
+                return player;
+            }
+        }
+
+        private Vector2 start;
+
         ContentManager content;
 
         public ContentManager Content {
@@ -21,15 +30,6 @@ namespace ScribblePlatformer {
                 return content;
             }
         }
-
-        public Player Player {
-            get {
-                return player;
-            }
-        }
-
-        Player player;
-        private Vector2 start;
 
         private const int TileWidth = 64;
         private const int TileHeight = 64;
@@ -68,10 +68,6 @@ namespace ScribblePlatformer {
             }
 
             LoadTiles(path);
-        }
-
-        public void Update(GameTime time) {
-            Player.Update(time);
         }
 
         public void Draw(GameTime time, SpriteBatch spriteBatch) {
@@ -121,25 +117,6 @@ namespace ScribblePlatformer {
                     tiles[x, y] = LoadTile(tileType, x, y);
                 }
             }
-        }
-
-        public TileCollision GetCollision(int x, int y) {
-            if(x < 0 || x >= Width)
-                return TileCollision.Impassable;
-            if(y < 0 || y >= Height)
-                return TileCollision.Passable;
-
-            return tiles[x, y].Collision;
-        }
-
-        public Rectangle GetBounds(int x, int y) {
-            if(x < 0 || y < 0 || x >= Width || y >= Height)
-                return new Rectangle(x * Tile.Width, y * Tile.Height, Tile.Width, Tile.Height);
-
-            if(tiles[x, y].Collision == TileCollision.Platform)
-                return new Rectangle(x * Tile.Width, (y * Tile.Height) + 20, Tile.Width, Tile.Height - 20);
-
-            return new Rectangle(x * Tile.Width, (y * Tile.Height) + 5, Tile.Width, Tile.Height - 5);
         }
 
         private Tile LoadTile(char type, int x, int y) {
@@ -195,11 +172,33 @@ namespace ScribblePlatformer {
 
         private Tile LoadStartTile(int x, int y) {
             if(Player != null)
-                throw new NotSupportedException("Level can only have one starting point!");
+                throw new NotSupportedException("A level can only have one player!");
 
             start = new Vector2((x * 64) + 48, (y * 64) + 16);
             player = new Player(this, start);
             return new Tile(String.Empty, 0, TileCollision.Passable);
+        }
+
+        public void Update(GameTime _gameTime) {
+            Player.update(_gameTime);
+        }
+
+        public TileCollision GetCollision(int _x, int _y) {
+            if(_x < 0 || _x >= Width)
+                return TileCollision.Impassable;
+            if(_y < 0 || _y >= Height)
+                return TileCollision.Passable;
+
+            return tiles[_x, _y].Collision;
+        }
+
+        public Rectangle GetBounds(int _x, int _y) {
+            if(_x < 0 || _y < 0 || _x >= Width || _y >= Height)
+                return new Rectangle(_x * Tile.Width, _y * Tile.Height, Tile.Width, Tile.Height);
+            if(tiles[_x, _y].Collision == TileCollision.Platform)
+                return new Rectangle(_x * Tile.Width, (_y * Tile.Height) + 20, Tile.Width, Tile.Height - 20);
+
+            return new Rectangle(_x * Tile.Width, (_y * Tile.Height) + 5, Tile.Width, Tile.Height - 5);
         }
 
 
