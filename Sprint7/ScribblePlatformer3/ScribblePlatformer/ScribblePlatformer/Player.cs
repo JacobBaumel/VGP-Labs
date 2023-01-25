@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ScribblePlatformer {
     
-    class Player {
+    class Player : AnimatedSprite {
         private const float MoveAccelaration = 14000f;
         private const float MaxMoveSpeed = 2000f;
         private const float GroundDragFactor = 0.58f;
@@ -24,8 +24,6 @@ namespace ScribblePlatformer {
 
         private const float MoveStickScale = 1f;
         private const Buttons JumpButton = Buttons.A;
-
-        private Texture2D playerSprite;
 
         public Level Level {
             get {
@@ -93,7 +91,7 @@ namespace ScribblePlatformer {
 
         public Vector2 Origin {
             get {
-                return new Vector2(playerSprite.Width / 2.0f, playerSprite.Height / 2.0f);
+                return new Vector2(FrameWidth / 2.0f, FrameHeight / 2.0f);
             }
         }
 
@@ -103,20 +101,42 @@ namespace ScribblePlatformer {
             Reset(_position);
         }
 
+        private string currentAnim = "Idle";
+        private SpriteEffects flip = SpriteEffects.None;
         public void LoadContent() {
-            playerSprite = Level.Content.Load<Texture2D>("Sprites/Player/player-1");
+            SpriteTextures.Add(Level.Content.Load<Texture2D>("Sprites/Player/player"));
+            Animation anim = new Animation();
+            anim.LoadAnimation("Idle", 0, new List<int> {0, 11, 0, 12}, 7, true);
+            SpriteAnimations.Add("Idle", anim);
 
-            int width = playerSprite.Width - 4;
-            int left = (playerSprite.Width - width) / 2;
-            int height = playerSprite.Height - 4;
-            int top = playerSprite.Height - height;
+            anim = new Animation();
+            anim.LoadAnimation("Walking", 0, new List<int> {0, 1, 2, 3, 4, 5, 6}, 7, true);
+            SpriteAnimations.Add("Walking", anim);
+
+            anim = new Animation();
+            anim.LoadAnimation("Jump", 0, new List<int> {7, 8, 9, 10, 9, 8, 7}, 20, false);
+            anim.AnimationCallBack(JumpAnimEnd);
+            SpriteAnimations.Add("Jump", anim);
+
+            int width = FrameWidth - 4;
+            int left = (FrameWidth - width) / 2;
+            int height = FrameHeight - 4;
+            int top = FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
+        }
+
+        public void JumpAnimEnd() {
+            currentAnim = "Idle";
+            SpriteAnimations[currentAnim].Play();
         }
 
         public void Reset(Vector2 _position) {
             Position = _position;
             Velocity = Vector2.Zero;
             isAlive = true;
+            SpriteAnimations[currentAnim].Stop();
+            currentAnim = "Idle";
+            SpriteAnimations[currentAnim].ResetPlay();
         }
 
         private void GetInput() {
@@ -141,18 +161,42 @@ namespace ScribblePlatformer {
                 keyboardState.IsKeyDown(Keys.Space) ||
                 keyboardState.IsKeyDown(Keys.Up) ||
                 keyboardState.IsKeyDown(Keys.W);
+
+            if(isJumping && currentAnim != "Jump") {
+                SpriteAnimations[currentAnim].Stop();
+                currentAnim = "Jump";
+                SpriteAnimations[currentAnim].ResetPlay();
+            }
+
+            if(movement != 0 && currentAnim != "Jump" && currentAnim != "Walking") {
+                SpriteAnimations[currentAnim].Stop();
+                currentAnim = "Walking";
+                SpriteAnimations[currentAnim].ResetPlay();
+            }
+
+            else if(currentAnim != "Jump" && movement == 0 && currentAnim == "walking") {
+                SpriteAnimations[currentAnim].Stop();
+                currentAnim = "Idle";
+                SpriteAnimations[currentAnim].ResetPlay();
+            }
         }
 
         public void Update(GameTime time) {
             GetInput();
             ApplyPhysics(time);
+            SpriteAnimations[currentAnim].Update(time);
             movement = 0;
             isJumping = false;
         }
 
         public void draw(GameTime time, SpriteBatch spriteBatch) {
-            Rectangle source = new Rectangle(0, 0, 96, 96);
-            spriteBatch.Draw(playerSprite, position, source, Color.White, 0, Origin, 1.0f, SpriteEffects.None, 0);
+            Rectangle source = GetFrameRectangle(SpriteAnimations[currentAnim].FrameToDraw);
+            if(Velocity.X < 0)
+                flip = SpriteEffects.FlipHorizontally;
+            else if(Velocity.X > 0)
+                flip = SpriteEffects.None;
+
+            spriteBatch.Draw(SpriteTextures[0], position, source, Color.White, 0.0f, Origin, 1.0f, flip, 0.0f);
         }
 
         private void ApplyPhysics(GameTime time) {
