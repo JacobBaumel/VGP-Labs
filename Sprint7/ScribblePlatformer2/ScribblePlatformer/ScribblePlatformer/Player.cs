@@ -19,7 +19,7 @@ namespace ScribblePlatformer {
         private const float MaxJumpTime = 0.35f;
         private const float JumpLaunchVelocity = -4000f;
         private const float GravityAccelaration = 3500f;
-        private const float MaxFallSpeed = -600f;
+        private const float MaxFallSpeed = -100f;
         private const float JumpControlPower = 0.14f;
 
         private const float MoveStickScale = 1f;
@@ -104,7 +104,7 @@ namespace ScribblePlatformer {
         }
 
         public void LoadContent() {
-            playerSprite = Level.Content.Load<Texture2D>("Sprites/Player/player");
+            playerSprite = Level.Content.Load<Texture2D>("Sprites/Player/player-1");
 
             int width = playerSprite.Width - 4;
             int left = (playerSprite.Width - width) / 2;
@@ -151,7 +151,7 @@ namespace ScribblePlatformer {
         }
 
         public void draw(GameTime time, SpriteBatch spriteBatch) {
-            Rectangle source = new Rectangle(0, 0, playerSprite.Width, playerSprite.Height);
+            Rectangle source = new Rectangle(0, 0, 96, 96);
             spriteBatch.Draw(playerSprite, position, source, Color.White, 0, Origin, 1.0f, SpriteEffects.None, 0);
         }
 
@@ -199,7 +199,7 @@ namespace ScribblePlatformer {
             }
            
             else {
-                jumpTime = 0.0f; 
+                jumpTime = 0.0f;
             }
 
             wasJumping = isJumping;
@@ -239,7 +239,7 @@ namespace ScribblePlatformer {
 
                             else if(collision == TileCollision.Impassable) {
                                 Console.WriteLine("xing   " + depth + "  going from " + position.X + " to " + (position.X + depth.X));
-                                Position = new Vector2(Position.X + depth.X, Position.Y);
+                                Position = new Vector2((int) (Position.X + (depth.X * 0.75)), Position.Y);
                                 bounds = BoundingRectangle;
                             }
                         }
