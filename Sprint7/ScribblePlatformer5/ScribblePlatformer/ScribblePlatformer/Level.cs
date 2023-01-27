@@ -53,6 +53,9 @@ namespace ScribblePlatformer {
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
 
+        private List<Collectable> collectables = new List<Collectable>();
+        private List<Collectable> collectedCollectables = new List<Collectable>();
+
         public Level(IServiceProvider provider, string path) {
             content = new ContentManager(provider, "Content");
 
@@ -78,6 +81,31 @@ namespace ScribblePlatformer {
             if(Player.IsCompletelyDead)
                 Player.Reset(start);
             UpdateEnemies(time);
+            UpdateCollectables(time);
+        }
+
+        public void UpdateCollectables(GameTime _gameTime) {
+            foreach(Collectable collectable in collectables) {
+                collectable.Update(_gameTime);
+                if(player.IsAlive && collectable.IsAlive) {
+                    if(collectable.BoundingRectangle.Intersects(player.BoundingRectangle)) {
+                        OnCollectableCollected(collectable);
+                    }
+                }
+            }
+
+            if(collectedCollectables.Count > 0) {
+                foreach(Collectable collectable in collectedCollectables) {
+                    collectables.Remove(collectable);
+                }
+            }
+
+            collectedCollectables.Clear();
+        }
+
+        private void OnCollectableCollected(Collectable _collected) {
+            _collected.OnKilled();
+            collectedCollectables.Add(_collected);
         }
 
         private void UpdateEnemies(GameTime _gameTime) {
@@ -122,6 +150,9 @@ namespace ScribblePlatformer {
             player.draw(time, spriteBatch);
             foreach(Enemy enemy in enemies)
                 enemy.Draw(time, spriteBatch);
+
+            foreach(Collectable collectable in collectables)
+                collectable.Draw(time, spriteBatch);
         }
 
         private void DrawTiles(SpriteBatch spriteBatch) {
@@ -224,6 +255,13 @@ namespace ScribblePlatformer {
                     return LoadVarietyTile("Blocks", 20, 5);
 
 
+                case 's':
+                    return LoadCollectableTile(x, y, "s");
+
+                case 'S':
+                    return LoadCollectableTile(x, y, "S");
+
+
                 case '+':
                     return LoadStartTile(x, y);
 
@@ -254,6 +292,12 @@ namespace ScribblePlatformer {
 
             start = new Vector2((x * 64) + 48, (y * 64) + 16);
             player = new Player(this, start);
+            return new Tile(String.Empty, 0, TileCollision.Passable);
+        }
+
+        private Tile LoadCollectableTile(int x, int y, string _collectable) {
+            Vector2 position = new Vector2((x * 64) + 48, (y * 64) + 20);
+            collectables.Add(new Collectable(this, position, _collectable));
             return new Tile(String.Empty, 0, TileCollision.Passable);
         }
 

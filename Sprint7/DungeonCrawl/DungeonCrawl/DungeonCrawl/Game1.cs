@@ -12,6 +12,8 @@ namespace DungeonCrawl {
 
         public static int WIDTH = 100;
         public static int HEIGHT = 50;
+        int gingerMidX;
+        int gingerMidY;
 
         Tile[,] tiles;
 
@@ -37,7 +39,8 @@ namespace DungeonCrawl {
             gingerBread = Content.Load<Texture2D>("Gingerbread Man");
             gingerDraw = new Rectangle((800 - (gingerBread.Width * 2)) / 2, (480 - (gingerBread.Height * 2)) / 2, gingerBread.Width * 2, gingerBread.Height * 2);
 
-
+            gingerMidX = gingerDraw.X;
+            gingerMidY = gingerDraw.Y;
 
             // Tile reading area
             int totalTiles;
@@ -86,11 +89,85 @@ namespace DungeonCrawl {
             if(state.Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            xpos += (int) (state.ThumbSticks.Right.X * 10);
-            ypos -= (int) (state.ThumbSticks.Right.Y * 10);
+            int xdir = (int) (state.ThumbSticks.Right.X * 10);
 
-            xpos = (int) (MathHelper.Clamp(xpos, 0, (WIDTH * 32) - 800));
-            ypos = (int) (MathHelper.Clamp(ypos, 0, (HEIGHT * 32) - 800));
+            if(xpos < 1) {
+                if(xdir < 0) {
+                    gingerDraw.X = (int) MathHelper.Clamp(gingerDraw.X + xdir, 0, gingerMidX);
+                }
+
+                else {
+                    if(gingerDraw.X < gingerMidX) {
+                        gingerDraw.X = (int) MathHelper.Clamp(gingerDraw.X + xdir, 0, gingerMidX);
+                    }
+
+                    else {
+                        xpos = (int) MathHelper.Clamp(xpos + xdir, 0, (WIDTH * 32) - 800);
+                    }
+                }
+            }
+
+            else if(xpos > (WIDTH * 32) - 801) {
+                if(xdir > 0) {
+                    gingerDraw.X = (int) MathHelper.Clamp(gingerDraw.X + xdir, gingerMidX, 800 - gingerDraw.Width);
+                }
+
+                else {
+                    if(gingerDraw.X > gingerMidX)
+                        gingerDraw.X = (int) MathHelper.Clamp(gingerDraw.X + xdir, gingerMidX, 800 - gingerDraw.Width);
+                    else
+                        xpos = (int) MathHelper.Clamp(xpos + xdir, 0, (WIDTH * 32) - 800);
+                }
+            }
+
+            else {
+                xpos = (int) MathHelper.Clamp(xpos + xdir, 0, (WIDTH * 32) - 800);
+            }
+
+
+            int ydir = (int) (-state.ThumbSticks.Right.Y * 10);
+
+            if(ypos < 1) {
+                if(ydir < 0) {
+                    gingerDraw.Y = (int) MathHelper.Clamp(gingerDraw.Y + ydir, 0, gingerMidY);
+                }
+
+                else {
+                    if(gingerDraw.Y < gingerMidY) {
+                        gingerDraw.Y = (int) MathHelper.Clamp(gingerDraw.Y + ydir, 0, gingerMidY);
+                    }
+
+                    else {
+                        ypos = (int) MathHelper.Clamp(ypos + ydir, 0, (HEIGHT * 32) - 480);
+                    }
+                }
+            }
+
+            else if(ypos > (HEIGHT * 32) - 481) {
+                if(ydir > 0) {
+                    gingerDraw.Y = (int) MathHelper.Clamp(gingerDraw.Y + ydir, gingerMidY, 480 - gingerDraw.Height);
+                }
+
+                else {
+                    if(gingerDraw.Y > gingerMidY) {
+                        gingerDraw.Y = (int) MathHelper.Clamp(gingerDraw.Y + ydir, gingerMidY, 480 - gingerDraw.Height);
+                    }
+
+                    else {
+                        ypos = (int) MathHelper.Clamp(ypos + ydir, 0, (HEIGHT * 32) - 480);
+                    }
+                }
+            }
+
+            else {
+                ypos = (int) MathHelper.Clamp(ypos + ydir, 0, (HEIGHT * 32) - 480);
+            }
+
+            Console.WriteLine(ypos + "    " + ydir);
+
+            //ypos -= (int) (state.ThumbSticks.Right.Y * 10);
+
+            //ypos = (int) (MathHelper.Clamp(ypos, 0, (HEIGHT * 32) - 800));
 
             base.Update(gameTime);
         }

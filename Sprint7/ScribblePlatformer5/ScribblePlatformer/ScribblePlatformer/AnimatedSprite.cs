@@ -12,10 +12,10 @@ namespace ScribblePlatformer {
         public int FrameHeight;
         private int framesPerRow;
         public Dictionary<string, Animation> SpriteAnimations;
-        public AnimatedSprite() {
-            FrameWidth = 96;
-            FrameHeight = 96;
-            framesPerRow = 4;
+        public AnimatedSprite(int _frameWidth, int _frameHeight, int _framesPerRow) {
+            FrameWidth = _frameWidth;
+            FrameHeight = _frameHeight;
+            framesPerRow = _framesPerRow;
             SpriteTextures = new List<Texture2D>();
             SpriteAnimations = new Dictionary<string, Animation>();
         }

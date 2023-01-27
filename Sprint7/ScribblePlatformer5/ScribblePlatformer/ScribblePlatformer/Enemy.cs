@@ -60,7 +60,7 @@ namespace ScribblePlatformer {
             }
         }
 
-        public Enemy(Level _level, Vector2 _position, string _enemy) {
+        public Enemy(Level _level, Vector2 _position, string _enemy) : base(96, 96, 4) {
             level = _level;
             position = _position;
             isAlive = true;

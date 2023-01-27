@@ -52,7 +52,7 @@ namespace JourneyToBabel {
             state = GameState.START;
             statePhrases = (new string[] {"start", "save", "done"}).ToList();
             phrases = new Dictionary<GameState, Dictionary<Language, string>>();
-            welcomePhrase = "Use spacebar to change game state, use number keys to change language\n1: English\n2:Spanish\n3: German";
+            welcomePhrase = "Use spacebar to change game state, use number keys to change language\n1: English\n2: Spanish\n3: German";
             wordPos = new Vector2(200, 200);
             old = Keyboard.GetState();
             watchkeys = new Keys[] { Keys.D1, Keys.D2, Keys.D3 };
